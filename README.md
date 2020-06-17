@@ -6,7 +6,6 @@
 5. kc -f node2.yaml
 6. kc -f node2-destination-rule.yaml
 7. kc -f node-gateway-istio.yaml
-
 8. istioctl dashboard kiali -p 34222
 9. dashoabd istio kiali  http://localhost:34222/kiali/console
 10. curl localhost/node1   AND  curl localhost/node2
