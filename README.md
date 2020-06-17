@@ -10,14 +10,11 @@
 8. istioctl dashboard kiali -p 34222
 9. dashoabd istio kiali  http://localhost:34222/kiali/console
 10. curl localhost/node1   AND  curl localhost/node2
-</BR>
-## open browser grafana: </BR>
-11.kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
+
+11. kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
 12. openbrowser http://localhost:3000/
-![Image of microservice](node1-to-node2.JPG)
-</BR>
-![Image of node1 metrics](node1-grafana.JPG)
-</BR>
-![Image of node2 metrics](node2-grafana.JPG)
+13. ![Image of microservice](node1-to-node2.JPG)
+14. ![Image of node1 metrics](node1-grafana.JPG)
+15. ![Image of node2 metrics](node2-grafana.JPG)
 </BR>
 
