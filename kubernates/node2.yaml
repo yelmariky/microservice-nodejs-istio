@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  
+  labels:
+    app: node2
+    version: v2
+  name: node2-v2
+ 
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: node2
+      version: v2
+  template:
+    metadata:
+     
+      labels:
+        app: node2
+        version: v2
+    spec:
+      containers:
+      - name: node2
+        image: node2:v2
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 4000 # The port that the container exposes
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  
+  labels:
+    app: node2
+    version: v1
+  name: node2-v1
+ 
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: node2
+      version: v1
+  template:
+    metadata:
+     
+      labels:
+        app: node2
+        version: v1
+    spec:
+      containers:
+      - name: node2
+        image: node2:v1
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 4000 # The port that the container exposes
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  
+  labels:
+    app: node2
+  name: node2
+  
+spec:
+  ports:
+  - port: 4000
+    protocol: TCP
+  selector:
+    app: node2
+  type: ClusterIP

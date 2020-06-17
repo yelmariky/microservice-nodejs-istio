@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  
+  labels:
+    app: node1
+  name: node1
+ 
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: node1
+  
+  template:
+    metadata:
+     
+      labels:
+        app: node1
+    spec:
+      containers:
+      - name: node1
+        image: node1:v1
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 8080 # The port that the container exposes
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  
+  labels:
+    app: node1
+  name: node1
+  
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: node1
+

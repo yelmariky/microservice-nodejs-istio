@@ -1,0 +1,52 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: node-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: node-virtualhost
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - node-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /node2
+    route:
+    -  destination:
+         host: node2
+         subset: v1
+         port:
+           number: 4000
+       weight: 75
+        
+    -  destination:
+         host: node2
+         subset: v2
+         port:
+           number: 4000
+       weight: 25
+        
+  - match:
+    - uri:
+        prefix: /node1
+    
+    route:
+    - destination:
+        host: node1
+        port:
+          number: 8080
